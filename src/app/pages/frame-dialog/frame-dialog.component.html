@@ -1,0 +1,25 @@
+<h1>Frame</h1>
+
+<div>
+    <form class="example-form" (ngSubmit)="onSubmit()">
+        <mat-form-field>
+            <input matInput placeholder="Name" type="text" required [(ngModel)]="product.name" name="name">
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput placeholder="Description" type="text" required [(ngModel)]="product.description" name="description">
+        </mat-form-field>
+
+        <div fxLayout="row" fxLayoutAlign="center center">
+            <div fxFlex="50" class="action-buttons">
+                <button type="submit" mat-button color="primary">
+           Save
+        </button>
+
+                <button type="button" (click)="onNoClick()" mat-button color="primary">
+           Cancel
+        </button>
+            </div>
+        </div>
+    </form>
+</div>

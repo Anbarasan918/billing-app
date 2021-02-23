@@ -1,0 +1,96 @@
+<div class=" ">
+
+    <div class=" ">
+        <div class="content">
+            <mat-card class="card">
+                <mat-card-title>
+                    <div fxLayout="row" fxLayoutAlign="center center">
+                        <div fxFlex="50" class="">
+                            <h3>Invoices</h3>
+                        </div>
+
+                        <div fxFlex="50" class="action-buttons">
+
+                            <button (click)="openDialog()" mat-button color="primary">
+                                <mat-icon>filter_alt</mat-icon> Filter
+                              </button>
+
+                            <button routerLink="/invoice" mat-button color="primary">
+                  <mat-icon>add</mat-icon> Invoice
+                </button>
+                        </div>
+                    </div>
+
+                </mat-card-title> 
+                <mat-card-content>
+                    <div class="example-container mat-elevation-z8">
+                        <mat-table #table [dataSource]="products">
+
+                            <ng-container matColumnDef="parentReference">
+                                <mat-header-cell *matHeaderCellDef> Bill # </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.parentReference}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="customerName">
+                                <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.customerName}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="invoiceDate">
+                                <mat-header-cell *matHeaderCellDef> Date </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.invoiceDate | date:"short"}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="grantTotal">
+                                <mat-header-cell *matHeaderCellDef>Bill Amount </mat-header-cell>
+                                <mat-cell class="table-amount-field" *matCellDef="let element">₹ {{element.grantTotal}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="paidAmount">
+                                <mat-header-cell *matHeaderCellDef>Paid Amount </mat-header-cell>
+                                <mat-cell class="table-amount-field" *matCellDef="let element">₹ {{element.paidAmount}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="balanceAmount">
+                                <mat-header-cell *matHeaderCellDef>Balance Amount </mat-header-cell>
+                                <mat-cell class="table-amount-field" *matCellDef="let element">₹ {{element.balanceAmount}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="isDataSynced">
+                                <mat-header-cell *matHeaderCellDef>Sync Status </mat-header-cell>
+                                <mat-cell class="table-amount-field" *matCellDef="let element">
+                                    <mat-icon *ngIf="element.isDataSynced">sync</mat-icon>
+                                    <mat-icon *ngIf="!element.isDataSynced">sync_disabled</mat-icon>
+                                </mat-cell>
+                            </ng-container>
+
+
+                            <ng-container matColumnDef="delete">
+                                <mat-header-cell *matHeaderCellDef>Action</mat-header-cell>
+                                <mat-cell *matCellDef="let element">
+
+                                    <a style="cursor: pointer;" (click)="editPost(element)" type="button">
+                                        <mat-icon class="icon">edit</mat-icon>
+                                    </a>
+
+                                    <!-- <a   (click)="deletePost(element)"  type="button">
+                      <mat-icon class="icon">delete</mat-icon>
+                    </a> -->
+                                </mat-cell>
+                            </ng-container>
+
+                            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                        </mat-table>
+
+                        <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="pageEvent = getServerData($event)">
+                        </mat-paginator>
+                    </div>
+
+                    <h4 *ngIf="products.length<=0">No Invoices Found.</h4>
+
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+</div>

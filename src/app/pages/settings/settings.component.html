@@ -1,0 +1,94 @@
+<div class=" ">
+
+    <div class=" ">
+        <div class="content">
+            <mat-card class="card">
+                <mat-card-title>
+                    <div fxLayout="row" fxLayoutAlign="center center">
+                        <div fxFlex="50" class="">
+                            <h3>Settings</h3>
+                        </div>
+                    </div>
+
+                </mat-card-title>
+                <mat-card-content>
+                    <form (ngSubmit)="onSubmit()">
+
+                        <mat-tab-group mat-align-tabs="start">
+                            <mat-tab label="Common" class="example-form">
+                                <div class="example-form">
+                                  
+                                    <mat-form-field>
+                                        <input matInput placeholder="Invoice Prefix" type="text" [(ngModel)]="settings.common.invoicePrefix" name="invoicePrefix">
+                                    </mat-form-field>
+
+                                    <mat-form-field>
+                                        <input matInput placeholder="Server Url" type="text" [(ngModel)]="settings.common.serverUrl" name="serverUrl">
+                                    </mat-form-field>
+
+                                    <mat-checkbox class="example-margin" name="printInvoice" [(ngModel)]="settings.common.printInvoice">Print Invoice</mat-checkbox>
+                                </div>
+                            </mat-tab>
+                            <mat-tab label="Sms Settings" class="example-form">
+
+                                <div class="example-form">
+                                    <mat-form-field>
+                                        <input matInput placeholder="Account Id" type="text" [(ngModel)]="settings.sms.accountId" name="smsAccountId">
+                                    </mat-form-field>
+
+                                    <mat-form-field>
+                                        <input matInput placeholder="Auth Token" type="text" [(ngModel)]="settings.sms.authToken" name="smsAuthToken">
+                                    </mat-form-field>
+
+                                    <mat-form-field>
+                                        <input matInput placeholder="From Number" type="text" [(ngModel)]="settings.sms.fromNo" name="smsFromNo">
+                                    </mat-form-field>
+
+                                    <mat-form-field>
+                                        <textarea rows="3" matInput placeholder="Message Content" [(ngModel)]="settings.sms.message" name="smsMessageContent"></textarea>
+                                    </mat-form-field>
+
+                                    <mat-checkbox class="example-margin" name="sendSmsMessage" [(ngModel)]="settings.sms.sendMsg">Send Message</mat-checkbox>
+
+                                </div>
+                            </mat-tab>
+                            <mat-tab label="WhatsApp Settings">
+                                <div class="example-form">
+                                    <mat-form-field>
+                                        <input matInput placeholder="Account Id" type="text" [(ngModel)]="settings.whatsApp.accountId" name="whatsAppaccountId">
+                                    </mat-form-field>
+
+                                    <mat-form-field>
+                                        <input matInput placeholder="Auth Token" type="text" [(ngModel)]="settings.whatsApp.authToken" name="whatsAppAuthToken">
+                                    </mat-form-field>
+
+                                    <mat-form-field>
+                                        <input matInput placeholder="From Number" type="text" [(ngModel)]="settings.whatsApp.fromNo" name="whatsAppFromNo">
+                                    </mat-form-field>
+
+                                    <mat-form-field>
+                                        <textarea rows="3" matInput placeholder="Message Content" [(ngModel)]="settings.whatsApp.message" name="whatsAppMessageContent"></textarea>
+                                    </mat-form-field>
+
+                                    <mat-checkbox class="example-margin" name="sendWhatappMessage" [(ngModel)]="settings.whatsApp.sendMsg">Send Message</mat-checkbox>
+
+                                </div>
+                            </mat-tab>
+                        </mat-tab-group>
+
+                        <div fxLayout="row" fxLayoutAlign="center center">
+                            <div fxFlex="50" class="action-buttons">
+                                <button type="button" (click)="saveSettings()" mat-button color="primary">
+                           Save
+                        </button>
+                            </div>
+                        </div>
+                    </form>
+
+
+
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+</div>

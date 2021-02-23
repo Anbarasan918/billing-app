@@ -1,0 +1,84 @@
+<div class=" ">
+
+    <div class=" ">
+        <div class="content">
+            <mat-card class="card">
+                <mat-card-title>
+                    <div fxLayout="row" fxLayoutAlign="center center">
+                        <div fxFlex="50" class="">
+                            <h3>Synced Invoices</h3>
+                        </div>
+
+                        <div fxFlex="50" class="action-buttons">
+
+                        </div>
+                    </div>
+
+                </mat-card-title>
+                <mat-card-content>
+                    <div class="example-container mat-elevation-z8">
+                        <mat-table #table [dataSource]="products">
+                            <!-- <ng-container matColumnDef="referenceId">
+                  <mat-header-cell *matHeaderCellDef> Ref # </mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{element.referenceId}} </mat-cell>
+                </ng-container> -->
+
+                            <ng-container matColumnDef="parentReference">
+                                <mat-header-cell *matHeaderCellDef> Bill # </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.parentReference}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="customerName">
+                                <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.customerName}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="invoiceDate">
+                                <mat-header-cell *matHeaderCellDef> Date </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.invoiceDate | date:"short"}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="grantTotal">
+                                <mat-header-cell *matHeaderCellDef>Bill Amount </mat-header-cell>
+                                <mat-cell class="table-amount-field" *matCellDef="let element">₹ {{element.grantTotal}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="paidAmount">
+                                <mat-header-cell *matHeaderCellDef>Paid Amount </mat-header-cell>
+                                <mat-cell class="table-amount-field" *matCellDef="let element">₹ {{element.paidAmount}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="balanceAmount">
+                                <mat-header-cell *matHeaderCellDef>Balance Amount </mat-header-cell>
+                                <mat-cell class="table-amount-field" *matCellDef="let element">₹ {{element.balanceAmount}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="paymentMode">
+                                <mat-header-cell *matHeaderCellDef>Payment Mode </mat-header-cell>
+                                <mat-cell class="table-amount-field" *matCellDef="let element">
+                                    <div> {{element.paymentMode}}</div>
+                                </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="orderDelivered">
+                                <mat-header-cell *matHeaderCellDef>Order Delivered </mat-header-cell>
+                                <mat-cell class="table-amount-field" *matCellDef="let element">
+                                    <div *ngIf="element.orderDelivered">Delivered </div>
+                                    <div *ngIf="!element.orderDelivered">Pending</div>
+                                </mat-cell>
+                            </ng-container>
+
+                            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                        </mat-table>
+                    </div>
+
+                    <h4 *ngIf="products.length<=0">No Invoices Found.</h4>
+                    <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="pageEvent = getServerData($event)">
+                    </mat-paginator>
+                </mat-card-content>
+            </mat-card>
+
+        </div>
+    </div>
+</div>

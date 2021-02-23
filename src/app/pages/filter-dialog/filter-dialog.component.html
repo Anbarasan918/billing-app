@@ -1,0 +1,37 @@
+<h1>Filters</h1>
+
+<div>
+    <form class="example-form" (ngSubmit)="onSubmit()">
+        <mat-form-field>
+            <input matInput placeholder="Bill #" type="text" [(ngModel)]="product.parentReference" name="name">
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="Customer Name" type="text" [(ngModel)]="product.customerName" name="quantity">
+        </mat-form-field>
+
+        <mat-form-field>
+            <input matInput placeholder="Phone" type="text" [(ngModel)]="product.phone" name="price">
+        </mat-form-field>
+
+        <mat-checkbox class="example-margin" name="orderDelivered" [(ngModel)]="product.orderDelivered">Deliverd Orders</mat-checkbox>
+
+        <mat-radio-group *ngIf="product.showDateFilter" name="invoiceDate" [(ngModel)]="product.invoiceDate">
+            <mat-radio-button value="Today"  >Today</mat-radio-button>
+            <mat-radio-button value="ThisWeek"  >Weekly</mat-radio-button>
+            <mat-radio-button value="ThisMonth">Monthly</mat-radio-button>
+            <mat-radio-button value="ThisYear">Yearly</mat-radio-button>
+        </mat-radio-group>
+
+        <div fxLayout="row" fxLayoutAlign="center center">
+            <div fxFlex="50" class="action-buttons">
+                <button type="submit" mat-button color="primary">
+           Save
+        </button>
+
+                <button type="button" (click)="onNoClick()" mat-button color="primary">
+           Cancel
+        </button>
+            </div>
+        </div>
+    </form>
+</div>

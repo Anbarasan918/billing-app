@@ -1,0 +1,23 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+@media print {
+    body * {
+        visibility: hidden;
+    }
+    #invoice-print,
+    #invoice-print * {
+        visibility: visible !important;
+    }
+    #invoice-print {
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+}
+
+.table-amount-field {
+    display: flex;
+    padding: 21px 0;
+    justify-content: space-around;
+}

@@ -1,0 +1,226 @@
+<div class="row" class="invoice-billing">
+    <div class="col-md-12">
+
+        <form [formGroup]="form" width="300px" novalidate id="invoice-form">
+
+            <div fxLayout="column">
+                <!-- <div class="row" fxLayoutAlign="center center" class="heading">
+          <h1>INVOICE</h1>
+        </div> -->
+
+                <div class="row">
+                    <div class="col-md-9 company-address-details">
+                        <b>Seenu Modelling Studio</b> <br/>
+                        <h5>Mangadu</h5>
+                        <p>Chennai</p>
+                    </div>
+
+                    <div class="col-md-3">
+                        <button style="margin: 10px;" mat-stroked-button color="primary" (click)="validateInvoice()">
+                             Print
+                        </button>
+                        <button style="margin: 10px;" mat-stroked-button color="primary" (click)="refreshForm()">
+                            Refresh
+                        </button>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <br>
+            <div class="invoice-basic-info">
+                <div class="row">
+                    <div class="col-md-4">
+                        BILL#: <b>{{form.value.parentReference}}</b>
+                    </div>
+
+                    <div class="col-md-4">
+                        DATE: {{ form.value.invoiceDate }}
+                    </div>
+
+                    <div class="col-md-4" style="margin-top: -6px;">
+                        <mat-checkbox formControlName="orderDelivered">Order Delivered</mat-checkbox>
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-4" style="margin-top: -6px;">
+                        <mat-form-field>
+                            <input placeholder="Name" matInput formControlName="customerName" />
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-md-4" style="margin-top: -6px;">
+                        <mat-form-field>
+                            <input placeholder="Phone" matInput formControlName="phone" />
+                        </mat-form-field>
+                    </div>
+
+                    <div class="col-md-4">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Payment Mode</mat-label>
+                            <mat-select formControlName="paymentMode">
+                                <mat-option></mat-option>
+                                <mat-option [value]="option.code" *ngFor="let option of paymentModes">{{ option.value }}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+            </div>
+
+            <br>
+
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th class="col-md-1"> </th>
+                        <th>Product</th>
+                        <th>Photo #</th>
+                        <th>Frame</th>
+                        <th>Size</th>
+                        <th>Quantity</th>
+                        <th>Cost</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody formArrayName="invoiceItems">
+                    <tr *ngFor="let item of invoiceItems.controls; let i=index; let odd=odd;" [formGroupName]="i">
+                        <td>
+                            <span matPrefix> 
+              <button mat-icon-button color="primary" (click)="removeItem(item)" >
+                <mat-icon>close</mat-icon>
+              </button>
+              {{i + 1}}  
+            </span>
+                        </td>
+                        <td>
+                            <input type="text" class="form-control" formControlName="productName" [matAutocomplete]="auto">
+                            <mat-autocomplete #auto="matAutocomplete">
+                                <mat-option *ngFor="let option of filteredOptions[i] | async" [value]="option.Name" (onSelectionChange)='setSelectedProduct(option,item)'>
+                                    {{option.Name}}
+                                </mat-option>
+                            </mat-autocomplete>
+                        </td>
+
+                        <td>
+                            <input class="form-control" formControlName="photoNo">
+                        </td>
+
+                        <td>
+                            <input type="text" class="form-control" formControlName="frame" [matAutocomplete]="auto1">
+                            <mat-autocomplete #auto1="matAutocomplete">
+                                <mat-option *ngFor="let option of frameOptions[i] | async" [value]="option.Name">
+                                    {{option.Name}}
+                                </mat-option>
+                            </mat-autocomplete>
+                        </td>
+
+                        <td>
+                            <input class="form-control" formControlName="photoSize">
+                        </td>
+
+                        <td>
+                            <input class="form-control" type="number" formControlName="noOfCopies">
+                        </td>
+
+                        <td>
+                            <input class="form-control" type="number" formControlName="pricePerCopy">
+                        </td>
+
+                        <td>
+                            <input class="form-control right_placeholder" disabled value="{{ item.value.total | currency: 'INR':true  }}">
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+
+
+            <div class="col-md-12">
+                <button mat-mini-fab color="primary" (click)="addItem()" class="mat-small">+</button>
+            </div>
+
+            <div class="row">
+                <div class="col-md-7">
+                </div>
+                <div class="col-md-2">
+                    <label>Sub total</label>
+                </div>
+                <div class="col-md-3">
+                    <input class="form-control right_placeholder" matInput disabled value="{{ form.value.subTotal | currency: 'INR':true  }}">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-7"></div>
+                <mat-form-field class="col-md-2">
+                    <input style="direction: rtl;" matInput type="number" formControlName="taxPercent" placeholder="% tax">
+                    <span matSuffix>&nbsp; %</span>
+                </mat-form-field>
+                <mat-form-field class="col-md-3">
+                    <input class="form-control right_placeholder" matInput disabled value="{{ form.value.tax | currency: 'INR':true  }}">
+                </mat-form-field>
+            </div>
+
+            <div class="row">
+                <div class="col-md-7">
+                </div>
+                <div class="col-md-2">
+                    <label>Grant total</label>
+                </div>
+                <div class="col-md-3">
+                    <input class="form-control right_placeholder" matInput disabled value="{{ form.value.grantTotal | currency: 'INR':true  }}">
+                </div>
+            </div>
+
+            <div class="row"> 
+                <div class="col-md-7">
+                </div>
+                <div class="col-md-2">
+                    <label>Paid Amount</label>
+                </div>
+                <div class="col-md-3"> 
+                    <div (click)="enablePaidAMountField(paidAmountVal)">
+                        <input    [ngClass]="isPaidAmountEdited?'invisible':''"  style="margin-top:5px ;" class="form-control right_placeholder" matInput [hidden]="isPaidAmountEdited"   [disabled]="!isPaidAmountEdited" value="{{ form.value.paidAmount | currency: 'INR':true  }}">
+                    </div>
+                    <input type="{{isPaidAmountEdited?'number':'hidden'}}" id="paidAmountVal" #paidAmountVal style="direction: rtl;margin-top:5px ;"  [hidden]="!isPaidAmountEdited" (input)="updatePaidAmount($event.target.value)" class="form-control"  (change)="updatePaidAmount($event)" placeholder="Paid">
+                </div>
+            </div>
+ 
+            <div class="row">
+                <div class="col-md-7">
+                </div> 
+                <div class="col-md-2">
+                    <label>Balance Amount</label>
+                </div>
+                <div class="col-md-3" style="text-align:right;">
+                    <h3> {{ form.value.balanceAmount | currency: 'INR':true }}</h3>
+                </div>
+            </div>
+ 
+
+
+            <div class="invoice-footer-info">
+                <div style="margin-top: 10px;">
+                    <b>Thank You for shopping with us...!</b>
+                    <!-- <h5>Goods once sold will not be replaced </h5>   -->
+                </div>
+            </div>
+
+        </form>
+
+        <div class="row" fxLayoutAlign="center center">
+            <div class="col-md-12" class="action-buttons" style="text-align: right">
+                <button mat-stroked-button color="primary" (click)="validateInvoice()">
+                  Print
+               </button>
+            </div>
+        </div>
+
+    </div>
+</div>
+

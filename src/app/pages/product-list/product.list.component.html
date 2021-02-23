@@ -1,0 +1,65 @@
+<div class="container">
+
+    <div class=" ">
+        <div class="content">
+            <mat-card class="card">
+                <mat-card-title>
+                    <div fxLayout="row" fxLayoutAlign="center center">
+                        <div fxFlex="50" class="">
+                            <h3>Products</h3>
+                        </div>
+
+                        <div fxFlex="50" class="action-buttons">
+                            <button (click)="openDialog()" mat-button color="primary">
+                  <mat-icon>add</mat-icon> Add Product
+                </button>
+
+                            <button routerLink="/invoice" mat-button color="primary">
+                  <mat-icon>add</mat-icon> Invoice
+                </button>
+                        </div>
+                    </div>
+
+                </mat-card-title>
+                <mat-card-content>
+                    <div class="example-container mat-elevation-z8">
+                        <mat-table #table [dataSource]="products">
+                            <ng-container matColumnDef="Name">
+                                <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.Name}} </mat-cell>
+                            </ng-container>
+                            <ng-container matColumnDef="Quantity">
+                                <mat-header-cell *matHeaderCellDef> Quantity </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.Quantity}} </mat-cell>
+                            </ng-container>
+                            <ng-container matColumnDef="Price">
+                                <mat-header-cell *matHeaderCellDef> Price </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.Price}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="Discount">
+                                <mat-header-cell *matHeaderCellDef> Size </mat-header-cell>
+                                <mat-cell *matCellDef="let element"> {{element.Size}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="delete">
+                                <mat-header-cell *matHeaderCellDef>Action</mat-header-cell>
+                                <mat-cell *matCellDef="let element">
+                                    <a (click)="deletePost(element)" type="button">
+                                        <mat-icon class="icon">delete</mat-icon>
+                                    </a>
+                                </mat-cell>
+                            </ng-container>
+
+                            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                        </mat-table>
+                    </div>
+
+                    <h4 *ngIf="products.length<=0">No Products Added.</h4>
+
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+</div>
